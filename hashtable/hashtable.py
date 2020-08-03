@@ -21,7 +21,8 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        # Your code here
+        self.capacity = capacity
+        self.storage = [None] * self.capacity
 
 
     def get_num_slots(self):
@@ -34,7 +35,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.capacity
 
 
     def get_load_factor(self):
@@ -49,20 +50,31 @@ class HashTable:
     def fnv1(self, key):
         """
         FNV-1 Hash, 64-bit
-
-        Implement this, and/or DJB2.
+        input, key: string
         """
+        fnv1_prime = 16777619
+        hash = 2166136261
+        for i in key:
+            # ^ : bitwise exclusive or operator
+            hash = hash ^ ord(i)
+            hash = hash * fnv1_prime
 
-        # Your code here
+        return hash
 
 
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
-
-        Implement this, and/or FNV-1.
+        input, key: string
         """
-        # Your code here
+        hash = 5381
+        for i in key:
+            # << : bitwise shift left operator
+            #      shifts hash left 5 spaces.
+            hash = ((hash << 5) + hash) + ord(i)
+
+        # 32-bit 8 Fs
+        return hash & 0xFFFFFFFF
 
 
     def hash_index(self, key):
@@ -81,7 +93,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        self.storage[index] = value
 
 
     def delete(self, key):
@@ -92,7 +105,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        self.storage[index] = None
 
 
     def get(self, key):
@@ -103,7 +117,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        return self.storage[index]
 
 
     def resize(self, new_capacity):
@@ -113,7 +128,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.capacity = new_capacity
+        return ""
 
 
 
