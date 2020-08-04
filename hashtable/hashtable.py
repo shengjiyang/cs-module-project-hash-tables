@@ -96,7 +96,7 @@ class HashTable:
         index = self.hash_index(key)
         
         if self.storage[index].find(key) is not None:
-            self.storage[index].delete(key)
+            return self.storage[index].delete(key)
 
         else:
             raise Exception("No entry found with that key.")
@@ -109,7 +109,11 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        return self.storage[index].find(key).value
+        if self.storage[index].find(key) is not None:
+            return self.storage[index].find(key).value
+
+        else:
+            return None
 
 
     def resize(self, new_capacity):
@@ -179,7 +183,7 @@ if __name__ == "__main__":
     ht.put("key-2", "val-2")
     print(ht.get("key-2"))
 
-    ht.put("key-0", "new-val-0")
-    print(ht.get("key-0"))
-    ht.put("key-1", "new-val-1")
-    ht.put("key-2", "new-val-2")
+    ht.delete("key-2")
+    print(ht.get("key-2"))
+    ht.delete("key-1")
+    ht.delete("key-0")
