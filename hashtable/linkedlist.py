@@ -1,13 +1,14 @@
 
 # hashtable/linkedlist.py
 
-class Node:
-    def __init__(self, value):
+class HashTableEntry:
+    """
+    Linked List hash table key/value pair
+    """
+    def __init__(self, key, value):
+        self.key = key
         self.value = value
         self.next = None
-
-    def __repr__(self):
-        return f'Node({repr(self.value)})'
 
 class LinkedList:
     def __init__(self):
@@ -32,23 +33,23 @@ class LinkedList:
 
         return s
 
-    def find(self, value):
+    def find(self, key):
         cur = self.head
 
         while cur is not None:
-            if cur.value == value:
+            if cur.key == key:
                 return cur
 
             cur = cur.next
 
         return None
 
-    def delete(self, value):
+    def delete(self, key):
         cur = self.head
 
         # Special case of deleting head
 
-        if cur.value == value:
+        if cur.key == key:
             self.head = cur.next
             return cur
 
@@ -58,7 +59,7 @@ class LinkedList:
         cur = cur.next
 
         while cur is not None:
-            if cur.value == value:  # Found it!
+            if cur.key == key:  # Found it!
                 prev.next = cur.next   # Cut it out
                 return cur  # Return deleted node
             else:
@@ -71,35 +72,35 @@ class LinkedList:
         node.next = self.head
         self.head = node
 
-    def insert_or_overwrite_value(self, value):
+    def insert_or_overwrite_value(self, key, value):
         node = self.find(value)
 
         if node is None:
             # Make a new node
-            self.insert_at_head(Node(value))
+            self.insert_at_head(HashTableEntry(key, value))
 
         else:
             # Overwrite old value
             node.value = value
 
-if __name__ == "__main__":
-    l = LinkedList()
-    print(l)
-    for i in range(5):
-        l.insert_at_head(Node(i))
-    print(l)
-    print(l.delete(2))
-    print(l)
-    print(l.delete(4))
-    print(l)
-    print(l.delete(0))
-    print(l)
+# if __name__ == "__main__":
+#     l = LinkedList()
+#     print(l)
+#     for i in range(5):
+#         l.insert_at_head(Node(i))
+#     print(l)
+#     print(l.delete(2))
+#     print(l)
+#     print(l.delete(4))
+#     print(l)
+#     print(l.delete(0))
+#     print(l)
 
-    print(l.find(0))
-    print(l.find(3))
-    print(l.find(1))
+#     print(l.find(0))
+#     print(l.find(3))
+#     print(l.find(1))
 
-    l.insert_or_overwrite_value(4)
-    print(l)
-    l.insert_or_overwrite_value(4)
-    print(l)
+#     l.insert_or_overwrite_value(4)
+#     print(l)
+#     l.insert_or_overwrite_value(4)
+#     print(l)

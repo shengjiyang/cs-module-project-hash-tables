@@ -1,20 +1,6 @@
 # hashtable/hashtable.py
 
-from linkedlist import LinkedList
-
-class HashTableEntry:
-    """
-    Linked List hash table key/value pair
-    """
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-        self.next = None
-
-
-# Hash table can't have fewer than this many slots
-MIN_CAPACITY = 8
-
+from linkedlist import HashTableEntry, LinkedList
 
 class HashTable:
     """
@@ -26,7 +12,7 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.storage = [None] * self.capacity
+        self.storage = [LinkedList()] * self.capacity
 
 
     def get_num_slots(self):
@@ -99,7 +85,12 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        self.storage[index] = value
+
+        if self.storage[index].find(key) is not None:
+            self.storage[index].insert_or_overwrite_value(HashTableEntry(key, value))
+
+        else:
+            self.storage[index].insert_at_head(HashTableEntry(key, value))
 
 
     def delete(self, key):
@@ -123,7 +114,7 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        return self.storage[index]
+        return self.storage[index].find(key).value
 
 
     def resize(self, new_capacity):
@@ -157,12 +148,17 @@ if __name__ == "__main__":
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
 
+    # print(ht.storage[0])
+    # print(ht.storage[0].head.key)
+    print(ht.get("line_1"))
+
     print("")
 
     # Test storing beyond capacity
     for i in range(1, 13):
         print(ht.get(f"line_{i}"))
 
+    print("storage")
     print(ht.storage)
 
     # Test resizing
