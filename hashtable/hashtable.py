@@ -30,7 +30,7 @@ class HashTable:
         Return the load factor for this hash table.
         Implement this.
         """
-        self.load_factor = [i.node for i.node in self.storage if i.node is not None]
+        self.load_factor = [i.head for i in self.storage if i.head is not None]
         return len(self.load_factor) / self.capacity
 
 
@@ -94,7 +94,12 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        self.storage[index] = None
+        
+        if self.storage[index].find(key) is not None:
+            self.storage[index].delete(key)
+
+        else:
+            raise Exception("No entry found with that key.")
 
 
     def get(self, key):
@@ -113,10 +118,16 @@ class HashTable:
         rehashes all key/value pairs.
         Implement this.
         """
-        # new_storage = [None] * new_capacity
-        # for item in self.storage:
-        #     self.item
-        # self.capacity = new_capacity
+        old_storage = self.storage
+        self.storage = [LinkedList()] * new_capacity
+        for ll in old_storage:
+            if ll.head is not None:
+                cur = ll.head
+                while cur is not None:
+                    self.put(cur.key, cur.value)
+                    cur = cur.next
+
+        self.capacity = new_capacity
 
 
 
