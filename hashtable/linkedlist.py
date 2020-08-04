@@ -1,4 +1,3 @@
-
 # hashtable/linkedlist.py
 
 class HashTableEntry:
@@ -73,7 +72,7 @@ class LinkedList:
         self.head = node
 
     def insert_or_overwrite_value(self, key, value):
-        node = self.find(value)
+        node = self.find(key)
 
         if node is None:
             # Make a new node
@@ -81,6 +80,7 @@ class LinkedList:
 
         else:
             # Overwrite old value
+            node.key = key
             node.value = value
 
 # if __name__ == "__main__":
