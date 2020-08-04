@@ -1,3 +1,7 @@
+# hashtable/hashtable.py
+
+from linkedlist import LinkedList
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -22,7 +26,7 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.storage = [None] * self.capacity
+        self.storage = [HashTableEntry()] * self.capacity
 
 
     def get_num_slots(self):
@@ -44,7 +48,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.load_factor = [i.node for i.node in self.storage if i.node is not None]
+        return len(self.load_factor) / self.capacity
 
 
     def fnv1(self, key):
@@ -94,7 +99,7 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        self.storage[index] = value
+        self.storage[index].add_to_tail({key : value})
 
 
     def delete(self, key):
@@ -128,8 +133,11 @@ class HashTable:
 
         Implement this.
         """
-        self.capacity = new_capacity
-        return ""
+        # new_storage = [None] * new_capacity
+        # for item in self.storage:
+        #     self.item
+        # self.capacity = new_capacity
+
 
 
 
@@ -154,6 +162,8 @@ if __name__ == "__main__":
     # Test storing beyond capacity
     for i in range(1, 13):
         print(ht.get(f"line_{i}"))
+
+    print(ht.storage)
 
     # Test resizing
     old_capacity = ht.get_num_slots()
