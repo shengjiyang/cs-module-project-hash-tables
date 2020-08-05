@@ -119,16 +119,16 @@ class HashTable:
         Changes the capacity of the hash table and
         rehashes all key/value pairs.
         """
-        # old_storage = self.storage
-        # self.storage = [LinkedList()] * new_capacity
-        # for ll in old_storage:
-        #     if ll.head is not None:
-        #         cur = ll.head
-        #         while cur is not None:
-        #             self.put(cur.key, cur.value)
-        #             cur = cur.next
+        old_storage = self.storage
+        self.storage = [LinkedList()] * new_capacity
+        for ll in old_storage:
+            if ll.head is not None:
+                cur = ll.head
+                while cur is not None:
+                    self.put(cur.key, cur.value)
+                    cur = cur.next
 
-        # self.capacity = new_capacity
+        self.capacity = new_capacity
 
 
 
