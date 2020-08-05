@@ -32,6 +32,15 @@ class LinkedList:
 
         return s
 
+    def __len__(self):
+        self.count = 0
+        cur = self.head
+        while cur is not None:
+            cur = cur.next
+            self.count += 1
+
+        return self.count
+
     def find(self, key):
         cur = self.head
 

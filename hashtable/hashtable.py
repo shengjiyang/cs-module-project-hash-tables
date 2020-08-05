@@ -6,7 +6,6 @@ class HashTable:
     """
     A hash table that with `capacity` buckets
     that accepts string keys
-    Implement this.
     """
 
     def __init__(self, capacity):
@@ -20,7 +19,6 @@ class HashTable:
         table data. (Not the number of items stored in the hash table,
         but the number of slots in the main list.)
         One of the tests relies on this.
-        Implement this.
         """
         return self.capacity
 
@@ -28,10 +26,13 @@ class HashTable:
     def get_load_factor(self):
         """
         Return the load factor for this hash table.
-        Implement this.
         """
-        self.load_factor = [i.head for i in self.storage if i.head is not None]
-        return len(self.load_factor) / self.capacity
+        counts = []
+        for i in self.storage:
+           counts.append(i.__len__())
+
+        return sum(counts) / len(self.storage)
+
 
 
     def fnv1(self, key):
@@ -76,7 +77,6 @@ class HashTable:
         """
         Store the value with the given key.
         Hash collisions should be handled with Linked List Chaining.
-        Implement this.
         """
         index = self.hash_index(key)
 
@@ -91,7 +91,6 @@ class HashTable:
         """
         Remove the value stored with the given key.
         Print a warning if the key is not found.
-        Implement this.
         """
         index = self.hash_index(key)
         
@@ -106,7 +105,6 @@ class HashTable:
         """
         Retrieve the value stored with the given key.
         Returns None if the key is not found.
-        Implement this.
         """
         index = self.hash_index(key)
         if self.storage[index].find(key) is not None:
@@ -120,18 +118,17 @@ class HashTable:
         """
         Changes the capacity of the hash table and
         rehashes all key/value pairs.
-        Implement this.
         """
-        old_storage = self.storage
-        self.storage = [LinkedList()] * new_capacity
-        for ll in old_storage:
-            if ll.head is not None:
-                cur = ll.head
-                while cur is not None:
-                    self.put(cur.key, cur.value)
-                    cur = cur.next
+        # old_storage = self.storage
+        # self.storage = [LinkedList()] * new_capacity
+        # for ll in old_storage:
+        #     if ll.head is not None:
+        #         cur = ll.head
+        #         while cur is not None:
+        #             self.put(cur.key, cur.value)
+        #             cur = cur.next
 
-        self.capacity = new_capacity
+        # self.capacity = new_capacity
 
 
 
@@ -174,16 +171,19 @@ if __name__ == "__main__":
 
     # print("")
 
-    ht = HashTable(0x10000)
+    ht = HashTable(16)
 
     ht.put("key-0", "val-0")
-    print(ht.get("key-0"))
     ht.put("key-1", "val-1")
-    print(ht.get("key-1"))
     ht.put("key-2", "val-2")
-    print(ht.get("key-2"))
+    ht.put("key-3", "val-3")
+    ht.put("key-4", "val-4")
+    ht.put("key-5", "val-5")
+    ht.put("key-6", "val-6")
+    ht.put("key-7", "val-7")
+    ht.put("key-8", "val-8")
+    ht.put("key-9", "val-9")
 
-    ht.delete("key-2")
-    print(ht.get("key-2"))
-    ht.delete("key-1")
-    ht.delete("key-0")
+    print(ht.storage[0].head.value)
+    print(ht.storage[1].head.value)
+    print(ht.get_load_factor())
