@@ -1,7 +1,27 @@
+def word_count(s):
+    d = {}
+    words = []
+    for w in s.split():
+        w = w.strip(",").strip(".").strip('"')
+        words.append(w.lower())
+
+    for w in words:
+        if ":;,.-+=/\\|[]{}()*^&" in words:
+            return {}
+
+        else:
+            d[w] = words.count(w)
+
+    return d
+
 def no_dups(s):
-    # Your code here
+    count = word_count(s)
+    
+    string = ""
+    for key in count:
+        string = string + " " + key
 
-
+    return string[1:]
 
 if __name__ == "__main__":
     print(no_dups(""))
